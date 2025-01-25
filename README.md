@@ -40,3 +40,7 @@
 
    ```bash
    git clone https://github.com/kaaliharsh/TweetUp.git
+
+
+- **For more details**: 
+- harshdeepgupta2002@gmail.com
