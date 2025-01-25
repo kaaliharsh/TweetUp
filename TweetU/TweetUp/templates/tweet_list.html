@@ -1,0 +1,32 @@
+{% extends 'layout.html' %} 
+{% block title %}
+TweetUp 
+{% endblock %}
+
+{% block content %}
+
+<h1 class="text-center mt-4">Tweets Feed</h1>
+
+<a class="btn btn-primary mb-4" href="{% url 'tweet_create' %}">Create Tweet</a>
+<div class="container row gap-4" >
+    {% for TweetUp in tweets %}
+    <div class="card" style="width: 18rem;">
+        <img src="{{TweetUp.photo.url}}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{TweetUp.user.username}}</h5>
+          <p class="card-text">{{TweetUp.text}}</p>
+
+          <!-- tweet edit condition -->
+           
+          {% if TweetUp.user == user %}
+          <a href="{% url 'tweet_edit' TweetUp.id %}" class="btn btn-outline-primary">Edit</a>
+          <a href="{% url 'tweet_delete' TweetUp.id %}" class="btn btn-outline-danger">Delete</a>
+          {% endif %}
+
+        </div>
+      </div>
+    {% endfor %}
+</div>
+
+
+{% endblock %}

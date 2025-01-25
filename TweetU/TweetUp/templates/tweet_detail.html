@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2>Tweet Details</h2>
+<p><strong>Tweet:</strong> {{ tweet.text }}</p>
+<p><strong>Posted by:</strong> {{ tweet.user.username }}</p>
+<p><strong>Created At:</strong> {{ tweet.created_at }}</p>
+<a href="{% url 'tweet_list' %}" class="btn btn-primary">Back to Tweets</a>
+{% endblock %}

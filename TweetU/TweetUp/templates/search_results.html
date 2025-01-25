@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2>Search Results</h2>
+{% if query %}
+  <p>Showing results for: <strong>{{ query }}</strong></p>
+{% endif %}
+
+{% if results %}
+  <ul>
+    {% for result in results %}
+      <li>
+        <a href="{{ result.get_absolute_url }}">{{ result.text }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No results found.</p>
+{% endif %}
+{% endblock %}

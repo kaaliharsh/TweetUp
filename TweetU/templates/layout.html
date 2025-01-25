@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>
+      {% block title %}
+        Tweetup for Geeks
+      {% endblock %}
+    </title>
+</head>
+
+<body >
+
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'tweet_list' %}">TweetUp</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+         
+          
+          <li class="nav-item dropdown">
+            
+            
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" aria-disabled="true"></a>
+          </li>
+        </ul>
+        <form class="d-flex" role="search" method="get" action="{% url 'search' %}">
+          <input 
+              class="form-control me-2" 
+              type="search" 
+              name="q" 
+              placeholder="Search" 
+              aria-label="Search"
+              value="{{ request.GET.q|default_if_none:'' }}"
+          >
+          <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+      
+        
+
+        <a href="{% url 'tweet_list' %}" class="btn btn-outline-light mx-2"> TweetUp Home</a>
+        {% if user.is_authenticated %}
+        <form method="post" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <button class="btn btn-outline-danger" type="submit">Logout</button>
+        </form>
+        {% else %}
+        <a href="{% url 'register' %}" class="btn btn-outline-info mx-2">Register</a>
+        <a href="{% url 'login' %}" class="btn btn-outline-success mx-2">Login</a>
+
+        {% endif %}
+
+      </div>
+    </div>
+  </nav>
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>
