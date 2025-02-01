@@ -23,6 +23,9 @@
 - **Search Functionality**: 
   - Users can search for tweets containing specific keywords or text.
 
+- **Dark/Light Mode theme**: 
+  - Users can change the theme into dark or light mode according to their requirement.
+
 ## Installation
 
 ### Prerequisites
