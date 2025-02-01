@@ -27,4 +27,7 @@ urlpatterns = [
     path("TweetUp/", include("TweetUp.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
     
+    
+    
+    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
