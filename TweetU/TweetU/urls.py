@@ -23,9 +23,8 @@ from django.contrib.auth.urls import views as auth_views
 
 
 urlpatterns = [
-    path("", include("TweetUp.urls")),
+    path("TweetUp/", include("TweetUp.urls")),
     path("admin/", admin.site.urls),
-    
     path("accounts/", include("django.contrib.auth.urls")),
     
     
