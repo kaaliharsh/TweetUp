@@ -1,7 +1,7 @@
 # TweetUp
 
 **TweetUp** is a social media platform designed for users to share their thoughts and ideas with the world. It allows users to post tweets, view tweets from others, and interact with the content posted by others. Users can register, log in, and manage their own posts. Built using Django, this platform features user authentication, tweet creation, editing, and deletion functionalities.
-
+ 
 ## Features
 
 - **User Registration & Authentication**: 
