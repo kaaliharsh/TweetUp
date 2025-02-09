@@ -20,18 +20,24 @@ def tweet_list(request):
 
 # Tweet form creation
 
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from .forms import TweetForm
+
 @login_required
 def tweet_create(request):
     if request.method == "POST":
         form = TweetForm(request.POST, request.FILES)
         if form.is_valid():
             tweet = form.save(commit=False)
-            tweet.user = request.user
+            tweet.user = request.user  # Assigning the logged-in user
             tweet.save()
-            return redirect("tweet_list")
+            return redirect("tweet_list")  # Redirecting after successful creation
     else:
         form = TweetForm()
+    
     return render(request, "tweet_form.html", {"form": form})
+
 
 
 # Editing the tweet form
