@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.shortcuts import render, get_object_or_404
 from .models import Tweet
+from django.http import JsonResponse
+
 
 
 # Creating the view here
@@ -105,3 +107,25 @@ def search_view(request):
     query = request.GET.get('q', '')  # Get the search query
     results = Tweet.objects.filter(text__icontains=query) if query else []  # Filter tweets by text
     return render(request, 'search_results.html', {'results': results, 'query': query})
+
+
+#      follow/unfollow view
+
+@login_required
+def follow_unfollow(request, username):
+    user_to_follow = get_object_or_404(User, username=username)
+    profile = request.user.profile  # Current user's profile
+
+    if profile.is_following(user_to_follow):
+        profile.unfollow(user_to_follow)
+        followed = False
+    else:
+        profile.follow(user_to_follow)
+        followed = True
+
+    return JsonResponse({
+        'followed': followed,
+        'followers_count': user_to_follow.profile.followers_count(),
+        'following_count': request.user.profile.following_count()
+    })
+
