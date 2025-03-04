@@ -1,0 +1,44 @@
+<h3>{{ user.username }}</h3>
+<p>Followers: <span id="followers-count">{{ user.profile.followers_count }}</span></p>
+<p>Following: <span id="following-count">{{ user.profile.following_count }}</span></p>
+
+<button id="follow-btn" class="btn btn-primary" data-username="{{ user.username }}">
+    {% if request.user.profile.is_following(user) %}
+        Unfollow
+    {% else %}
+        Follow
+    {% endif %}
+</button>
+
+<script>
+document.getElementById("follow-btn").addEventListener("click", function() {
+    let username = this.dataset.username;
+    let btn = this;
+    let followersCountElem = document.getElementById("followers-count");
+    let followingCountElem = document.getElementById("following-count");
+
+    fetch(`/follow/${username}/`, {
+        method: "POST",
+        headers: {
+            "X-CSRFToken": getCSRFToken(),
+            "Content-Type": "application/json"
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.followed) {
+            btn.textContent = "Unfollow";
+        } else {
+            btn.textContent = "Follow";
+        }
+        followersCountElem.textContent = data.followers_count;
+        followingCountElem.textContent = data.following_count;
+    });
+});
+
+function getCSRFToken() {
+    return document.cookie.split('; ')
+        .find(row => row.startsWith('csrftoken'))
+        ?.split('=')[1];
+}
+</script>
