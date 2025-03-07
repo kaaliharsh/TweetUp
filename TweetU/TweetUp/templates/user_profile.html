@@ -16,7 +16,7 @@ document.getElementById("follow-btn").addEventListener("click", function() {
     let btn = this;
     let followersCountElem = document.getElementById("followers-count");
     let followingCountElem = document.getElementById("following-count");
-
+ 
     fetch(`/follow/${username}/`, {
         method: "POST",
         headers: {
