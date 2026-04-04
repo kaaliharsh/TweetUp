@@ -5,6 +5,18 @@
 {% block content %}
 <h1 class="text-center mt-4">TweetUp</h1>
 
+{% if request.user.is_authenticated %}
+  <h4 class="text-center mt-3">
+    Hello {{ request.user.username }},
+    {% if hour >= 0 and hour < 12 %}
+    Good Morning ☀️
+{% elif hour >= 12 and hour < 17 %}
+  Good Afternoon 🌤️
+{% else %}
+  Good Evening 🌙
+{% endif %}
+  </h4>
+{% endif %}
 <a class="btn btn-primary mb-4" href="{% url 'tweet_create' %}">Create Tweet</a>
 
 <div class="container row gap-4">

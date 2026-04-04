@@ -129,3 +129,21 @@ def follow_unfollow(request, username):
         'following_count': request.user.profile.following_count()
     })
 
+
+# fetch date and time for greetings on home page
+
+from django.utils import timezone
+import pytz
+
+def tweet_list(request):
+    tweets = Tweet.objects.all()
+    ist = pytz.timezone('Asia/Kolkata')
+    current_time = timezone.now().astimezone(ist)
+    hour = current_time.hour
+
+    print(current_time)
+
+    return render(request, 'tweet_list.html', {
+        'tweets': tweets,
+        'hour': hour
+    })

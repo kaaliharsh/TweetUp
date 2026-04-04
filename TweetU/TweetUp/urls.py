@@ -1,6 +1,8 @@
 from .import views
 from django.urls import path
 
+TIME_ZONE = 'Asia/Kolkata'
+USE_TZ = True
 
 urlpatterns=[
     path('', views.tweet_list, name='tweet_list'),
@@ -13,6 +15,7 @@ urlpatterns=[
     path('tweet/<int:tweet_id>/', views.tweet_detail, name='tweet_detail'),
     path('search/', views.search_view, name='search'),
     path('follow/<str:username>/', views.follow_unfollow, name='follow_unfollow'),
+    path('TweetUp/', views.tweet_create),  # Include the app's URLs
     
     
    
