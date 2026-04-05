@@ -1,22 +1,82 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="container mt-5" >
-    <h2 class="mb-4">Register</h2>
-    <form method="post" class="form-control">
-        {% csrf_token %}
-        
-        <!-- Render the form -->
-        {{ form.as_p }}
-        
-        <!-- Register Button -->
-        <button type="submit" class="btn btn-primary btn-block">Register</button>
-    </form>
+<style>
+    .form-card {
+        width: 400px;
+        border-radius: 12px;
+    }
+
+    .password-wrapper {
+        position: relative;
+    }
+
+    .toggle-text {
+        position: absolute;
+        right: 12px;
+        top: 70%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        font-size: 13px;
+        color: #0d6efd;
+    }
+</style>
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
     
-    <!-- Link to Login -->
-    <p class="mt-3">
-        Already have an account? 
-        <a href="{% url 'login' %}" class="text-primary font-weight-bold">Login here</a>
-    </p>
+    <div class="card shadow-lg p-4 form-card">
+        
+        <h4 class="text-center mb-4">Create Account</h4>
+        
+        <form method="post">
+            {% csrf_token %}
+
+            <!-- Username -->
+            <div class="mb-3">
+                <input type="text" name="username" class="form-control" placeholder="Username" required>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+                <input type="email" name="email" class="form-control" placeholder="Email" required>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3 password-wrapper">
+                <input type="password" id="password" name="password1" class="form-control" placeholder="Password" required>
+                <span class="toggle-text" onclick="togglePassword('password','toggle1')" id="toggle1">Show</span>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="mb-3 password-wrapper">
+                <input type="password" id="confirmPassword" name="password2" class="form-control" placeholder="Confirm Password" required>
+                <span class="toggle-text" onclick="togglePassword('confirmPassword','toggle2')" id="toggle2">Show</span>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 mt-2">Register</button>
+        </form>
+
+        <p class="text-center mt-3 mb-0">
+            Already have an account? 
+            <a href="{% url 'login' %}" class="text-decoration-none">Login</a>
+        </p>
+
+    </div>
 </div>
+
+<script>
+function togglePassword(fieldId, toggleId) {
+    const pass = document.getElementById(fieldId);
+    const text = document.getElementById(toggleId);
+
+    if (pass.type === "password") {
+        pass.type = "text";
+        text.innerText = "Hide";
+    } else {
+        pass.type = "password";
+        text.innerText = "Show";
+    }
+}
+</script>
+
 {% endblock %}
