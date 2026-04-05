@@ -1,11 +1,71 @@
 {% extends "layout.html" %}
 
-{% block content %} 
-<h2>Login form</h2>
-<form method="post">
-    {% csrf_token %}
-    {{form.as_p}}
-   <button  class="btn btn-primary">Login</button>
-</form>
-<p>Dont have an account? <a href="{% url 'register' %}">Register here</a></p>
+{% block content %}
+<style>
+    .login-card {
+        width: 400px;
+        border-radius: 12px;
+    }
+
+    .password-wrapper {
+        position: relative;
+    }
+
+    .toggle-text {
+        position: absolute;
+        right: 12px;
+        top: 70%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        font-size: 13px;
+        color: #0d6efd; /* Bootstrap primary */
+    }
+</style>
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    
+    <div class="card shadow-lg p-4 login-card">
+        
+        <h4 class="text-center mb-4">Welcome Back 👋</h4>
+        
+        <form method="post">
+            {% csrf_token %}
+
+            <!-- Username -->
+            <div class="mb-3">
+                <input type="text" name="username" class="form-control" placeholder="Username" required>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3 password-wrapper">
+                <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+                <span class="toggle-text" onclick="togglePassword()" id="toggleText">Show</span>
+            </div>
+
+            <button class="btn btn-primary w-100 mt-2">Login</button>
+        </form>
+
+        <p class="text-center mt-3 mb-0">
+            Don’t have an account? 
+            <a href="{% url 'register' %}" class="text-decoration-none">Register</a>
+        </p>
+
+    </div>
+</div>
+
+<script>
+function togglePassword() {
+    const pass = document.getElementById("password");
+    const text = document.getElementById("toggleText");
+
+    if (pass.type === "password") {
+        pass.type = "text";
+        text.innerText = "Hide";
+    } else {
+        pass.type = "password";
+        text.innerText = "Show";
+    }
+}
+</script>
+
 {% endblock %}
