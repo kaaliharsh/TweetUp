@@ -3,40 +3,80 @@
 {% block title %} TweetUp {% endblock %} 
 
 {% block content %}
-<h1 class="text-center mt-4">TweetUp</h1>
+<style>
+    .tweet-card {
+        border-radius: 12px;
+        transition: 0.2s;
+    }
+
+    .tweet-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    }
+
+    .tweet-img {
+        height: 200px;
+        object-fit: cover;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+    }
+
+    .tweet-username {
+        font-weight: 600;
+    }
+
+    .tweet-text {
+        font-size: 14px;
+        margin-top: 5px;
+    }
+</style>
+
 
 {% if request.user.is_authenticated %}
-  <h4 class="text-center mt-3">
+  <h2 class="text-center mt-3">
     Hello {{ request.user.username }},
     {% if hour >= 0 and hour < 12 %}
-    Good Morning ☀️
-{% elif hour >= 12 and hour < 17 %}
-  Good Afternoon 🌤️
-{% else %}
-  Good Evening 🌙
-{% endif %}
-  </h4>
-{% endif %}
-<a class="btn btn-primary mb-4" href="{% url 'tweet_create' %}">Create Tweet</a>
-
-<div class="container row gap-4">
-  {% for tweet in tweets %}
-  <div class="card" style="width: 18rem">
-    {% if tweet.photo %}
-      <img src="{{ tweet.photo.url }}" class="card-img-top" alt="Tweet Image" />
+        Good Morning ☀️
+    {% elif hour >= 12 and hour < 17 %}
+        Good Afternoon 🌤️
+    {% else %}
+        Good Evening 🌙
     {% endif %}
+  </h2>
+{% endif %}
+
+<div class="text-center">
+    <a class="btn btn-primary mb-4" href="{% url 'tweet_create' %}">
+        + Create Tweet
+    </a>
+</div>
+
+<div class="container row gap-4 justify-content-center">
+    
+  {% for tweet in tweets %}
+  
+  <div class="card tweet-card p-0" style="width: 18rem">
+
+    {% if tweet.photo %}
+      <img src="{{ tweet.photo.url }}" class="card-img-top tweet-img" alt="Tweet Image" />
+    {% endif %}
+
     <div class="card-body">
-      <h5 class="card-title">{{ tweet.user.username }}</h5>
-      <p class="card-text">{{ tweet.text }}</p>
+      <h6 class="tweet-username">@{{ tweet.user.username }}</h6>
+      <p class="tweet-text">{{ tweet.text }}</p>
 
       {% if tweet.user == request.user %}
-        <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-outline-primary">Edit</a>
-        <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-outline-danger">Delete</a>
+        <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
+        <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
       {% endif %}
     </div>
+
   </div>
+
   {% empty %}
-  <p>No tweets available.</p>
+    <p class="text-center text-muted">No tweets available.</p>
   {% endfor %}
+
 </div>
+
 {% endblock %}
